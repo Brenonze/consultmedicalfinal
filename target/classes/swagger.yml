@@ -1,0 +1,227 @@
+openapi: 3.0.1
+info:
+  title: Gerenciamento de consultas
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /usuarios/{id}:
+    get:
+      tags:
+        - CRUD Usuario
+      operationId: Buscar usuário
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Usuario"
+    put:
+      tags:
+        - CRUD Usuario
+      operationId: atualizarCliente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Usuario"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Usuario"
+    delete:
+      tags:
+        - CRUD Usuario
+      operationId: deletarUsuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+  /consultas/{id}:
+    get:
+      tags:
+        - CRUD Consulta
+      operationId: buscarConsulta
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Consulta"
+    put:
+      tags:
+        - CRUD Consulta
+      operationId: atualizarConsulta
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Consulta"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Consulta"
+    delete:
+      tags:
+        - CRUD Consulta
+      operationId: deletarConsulta
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+  /usuarios:
+    get:
+      tags:
+        - CRUD Usuario
+      operationId: listarUsuario
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Usuario"
+    post:
+      tags:
+        - CRUD Usuario
+      operationId: cadastrarUsuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Usuario"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Usuario"
+  /consultas:
+    get:
+      tags:
+        - CRUD Consulta
+      operationId: listarConsultas
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Consulta"
+    post:
+      tags:
+        - CRUD Consulta
+      operationId: cadastrarConsulta
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Consulta"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Consulta"
+components:
+  schemas:
+    Consulta:
+      type: object
+      properties:
+        idConsulta:
+          type: integer
+          format: int64
+        dataConsulta:
+          type: string
+          format: date-time
+        especialidade:
+          type: string
+        profissional:
+          type: string
+        usuario:
+          $ref: "#/components/schemas/Usuario"
+    Usuario:
+      type: object
+      properties:
+        idUsuario:
+          type: integer
+          format: int64
+        nomeUsuario:
+          type: string
+        email:
+          type: string
+        cpf:
+          type: string
+        telefone:
+          type: string
+        dataNascimento:
+          type: string
+          format: date-time
+        permissao:
+          type: string
+          enum:
+            - ADMIN
+            - SECRETARIO
+        consultas:
+          type: array
+          items:
+            $ref: "#/components/schemas/Consulta"
